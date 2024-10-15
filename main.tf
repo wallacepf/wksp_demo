@@ -1,13 +1,16 @@
 terraform {
-  backend "s3" {
-    bucket = "wrkspc-migration-demo"
-    key    = "states/terraform.tfstate"
-    region = "us-east-1"
+  cloud {
+    organization = "my-demo-account"
+    hostname     = "app.terraform.io"
+    workspaces {
+      project = "wksp_demo"
+      tags    = ["wksp_demo"]
+    }
   }
 }
 
 locals {
-  env = var.environment == "prod" ? "prod" : "dev"
+  env       = var.environment == "prod" ? "prod" : "dev"
   workspace = terraform.workspace
 }
 
